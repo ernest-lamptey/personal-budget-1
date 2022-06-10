@@ -6,12 +6,12 @@ const getAllenvelopes = () => {
 };
 
 const getOneEnvelope = (envelopeId) => {
-    const index = DB.budget.findIndex((item) => item.name == envelopeId);
+    const index = DB.budget.findIndex((item) => item.id == envelopeId);
     return DB.budget[index];
 };
 
 const createNewEnvelope = (newEnvelope) => {
-    const alreadyExists = DB.budget.find((item) => item.name == newEnvelope.name);
+    const alreadyExists = DB.budget.find((item) => item.id == newEnvelope.id);
     if (alreadyExists) {
         return;
     }
@@ -21,8 +21,12 @@ const createNewEnvelope = (newEnvelope) => {
     return newEnvelope;
 };
 
-const updateOneEnvelope = (req, res) => {
-
+const updateOneEnvelope = (envelopeId, changes) => {
+    const index = DB.budget.findIndex((item) => item.id == envelopeId);
+    DB.budget[index].name = changes.name;
+    DB.budget[index].amount = changes.amount;
+    saveToDatabase(DB);
+    return DB.budget[index];
 };
 
 const deleteOneEnvelope = (req, res) => {

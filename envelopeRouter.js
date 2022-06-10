@@ -18,6 +18,7 @@ router.post('/', (req, res) => {
     const { body } = req;
     
     const newEnvelope = {
+        id: body.id,
         name: body.name,
         amount: body.amount,
     };
@@ -27,7 +28,10 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:envelopeId', (req, res) => {
-    res.send('UPDATE ONE: working fine');
+    const envelopeId = req.params.envelopeId;
+    const { body } = req;
+    const updatedEnvelope = service.updateOneEnvelope(envelopeId, body)
+    res.send({status: 'OK', data: updatedEnvelope });
 });
 
 router.delete('/:envelopeId', (req, res) => {
