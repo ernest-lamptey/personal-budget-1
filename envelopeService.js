@@ -22,15 +22,20 @@ const createNewEnvelope = (newEnvelope) => {
 };
 
 const updateOneEnvelope = (envelopeId, changes) => {
-    const index = DB.budget.findIndex((item) => item.id == envelopeId);
+    const index = DB.budget.findIndex((item) => item.id === envelopeId);
     DB.budget[index].name = changes.name;
     DB.budget[index].amount = changes.amount;
     saveToDatabase(DB);
     return DB.budget[index];
 };
 
-const deleteOneEnvelope = (req, res) => {
-
+const deleteOneEnvelope = (envelopeId) => {
+    const indexForDeletion = DB.budget.findIndex((item) => item.id == envelopeId)
+    if (indexForDeletion == -1){
+        return;
+    }
+    DB.budget.splice(indexForDeletion, 1)
+    saveToDatabase(DB);
 };
 
 module.exports = {

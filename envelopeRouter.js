@@ -35,7 +35,9 @@ router.put('/:envelopeId', (req, res) => {
 });
 
 router.delete('/:envelopeId', (req, res) => {
-    res.send('DELETE ONE: working fine');
+    const envelopeId = req.params.envelopeId;
+    service.deleteOneEnvelope(envelopeId);
+    res.send({status: 'OK'});
 });
 
 module.exports = router;
