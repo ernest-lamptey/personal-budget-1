@@ -2,12 +2,26 @@ const DB = require('./data.json');
 const {saveToDatabase } = require('./utils')
 
 const getAllenvelopes = () => {
-    return DB.budget;
+    try {
+        return DB.budget;
+    } catch (error) {
+        throw { status: 500, message: error };
+    } 
 };
 
 const getOneEnvelope = (envelopeId) => {
-    const index = DB.budget.findIndex((item) => item.id == envelopeId);
-    return DB.budget[index];
+    try {
+        const index = DB.budget.findIndex((item) => item.id == envelopeId);
+        if (index === -1){
+            throw {
+                status: 400,
+                message: `Can't find envelope with id '${envelopeId}'`
+            };
+        }
+        return DB.budget[index];
+    } catch (error) {
+        throw { status: error?.status || 500, message: error?.message || error }
+    }
 };
 
 const createNewEnvelope = (newEnvelope) => {

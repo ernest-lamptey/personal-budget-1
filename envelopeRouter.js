@@ -3,14 +3,22 @@ const router = express.Router();
 const service = require('./envelopeService');
 
 router.get('/', (req, res) => {
-    const allEnvelopes = service.getAllenvelopes();
-    res.send({status: 'OK', data: allEnvelopes});
+    try {
+        const allEnvelopes = service.getAllenvelopes();
+        res.send({status: 'OK', data: allEnvelopes});
+    } catch (error) {
+        res.status(error?.status || 500).send({status: "FAILED", message: error?.message || error });
+    }
 });
 
 router.get('/:envelopeId', (req, res) => {
     const envelopeId = req.params.envelopeId
-    const oneEnvelope = service.getOneEnvelope(envelopeId);
-    res.send({status: 'OK', data: oneEnvelope})
+    try {
+        const oneEnvelope = service.getOneEnvelope(envelopeId);
+        res.send({status: 'OK', data: oneEnvelope});
+    } catch (error) {
+        res.status(error?.status || 500).send({ status: "FAILED", data: { error : error?.message || error }});
+    }
 });
 
 router.post('/', (req, res) => {
