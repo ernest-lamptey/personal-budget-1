@@ -1,0 +1,20 @@
+{
+  "budget": [
+    {
+      "name": "gas",
+      "amount": 300
+    },
+    {
+      "name": "groceries",
+      "amount": 150
+    },
+    {
+      "name": "savings",
+      "amount": 200
+    },
+    {
+      "name": "charity",
+      "amount": 70
+    }
+  ]
+}

@@ -1,16 +1,29 @@
 const express = require('express');
 const router = express.Router();
+const service = require('./envelopeService');
 
 router.get('/', (req, res) => {
-    res.send('GET ALL: working fine');
+    const allEnvelopes = service.getAllenvelopes();
+    res.send({status: 'OK', data: allEnvelopes});
 });
 
 router.get('/:envelopeId', (req, res) => {
-    res.send('GET ONE: working fine');
+    const envelopeId = req.params.envelopeId
+    const oneEnvelope = service.getOneEnvelope(envelopeId);
+    res.send({status: 'OK', data: oneEnvelope})
 });
 
 router.post('/', (req, res) => {
-    res.send('CREATE ONE: working fine');
+    //Object destructuring
+    const { body } = req;
+    
+    const newEnvelope = {
+        name: body.name,
+        amount: body.amount,
+    };
+
+    const createdEnvelope = service.createNewEnvelope(newEnvelope);
+    res.send({status: 'OK', data: createdEnvelope});
 });
 
 router.put('/:envelopeId', (req, res) => {
