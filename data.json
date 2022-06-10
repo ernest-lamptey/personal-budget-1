@@ -19,6 +19,12 @@
       "id": 4,
       "name": "charity",
       "amount": 70
+    },
+    {
+      "id": 7,
+      "name": "shoes",
+      "amount": 400,
+      "balance": 200
     }
   ]
 }

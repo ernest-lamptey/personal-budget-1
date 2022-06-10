@@ -48,7 +48,6 @@ router.put('/:envelopeId', (req, res) => {
     const { body } = req;
     if (
         !envelopeId ||
-        !body.name ||
         !body.amount
     ) {
         res.status(400).send({ status: "FAILED", data: {error: "One of the following keys is missing in the request body: 'name', 'amount' or missing parameter"}})
