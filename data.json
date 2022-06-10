@@ -19,11 +19,6 @@
       "id": 4,
       "name": "charity",
       "amount": 70
-    },
-    {
-      "id": 5,
-      "name": "smart devices",
-      "amount": 500
     }
   ]
 }

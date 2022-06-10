@@ -25,31 +25,54 @@ const getOneEnvelope = (envelopeId) => {
 };
 
 const createNewEnvelope = (newEnvelope) => {
-    const alreadyExists = DB.budget.find((item) => item.id == newEnvelope.id);
-    if (alreadyExists) {
-        return;
+    try {
+        const alreadyExists = DB.budget.find((item) => item.id == newEnvelope.id);
+        if (alreadyExists) {
+            throw {
+                status: 400,
+                message: `Envelope with id '${newEnvelope.id}' already exists`
+            };
+        }
+        DB.budget.push(newEnvelope);
+        saveToDatabase(DB);
+        return newEnvelope;
+    } catch (error) {
+        throw { status: error?.status || 500, message: error?.message || error }
     }
-
-    DB.budget.push(newEnvelope);
-    saveToDatabase(DB);
-    return newEnvelope;
 };
 
 const updateOneEnvelope = (envelopeId, changes) => {
-    const index = DB.budget.findIndex((item) => item.id === envelopeId);
-    DB.budget[index].name = changes.name;
-    DB.budget[index].amount = changes.amount;
-    saveToDatabase(DB);
-    return DB.budget[index];
+    try {
+        const index = DB.budget.findIndex((item) => item.id === envelopeId);
+        if (index === -1){
+            throw {
+                status: 404,
+                message: `Envelope with id '${envelopeId}' doesn't exist`
+            }
+        }
+        DB.budget[index].name = changes.name;
+        DB.budget[index].amount = changes.amount;
+        saveToDatabase(DB);
+        return DB.budget[index];
+    } catch (error) {
+        throw { status: error?.status || 500, message: error?.message || error }
+    }
 };
 
 const deleteOneEnvelope = (envelopeId) => {
-    const indexForDeletion = DB.budget.findIndex((item) => item.id == envelopeId)
-    if (indexForDeletion == -1){
-        return;
+    try {
+        const indexForDeletion = DB.budget.findIndex((item) => item.id == envelopeId)
+        if (indexForDeletion == -1){
+            throw {
+                status: 404,
+                message: `Envelope with id '${envelopeId}' doesn't exist`
+            }
+        }
+        DB.budget.splice(indexForDeletion, 1)
+        saveToDatabase(DB);
+    } catch (error) {
+        throw { status: error?.status || 500, message: error?.message || error }
     }
-    DB.budget.splice(indexForDeletion, 1)
-    saveToDatabase(DB);
 };
 
 module.exports = {
