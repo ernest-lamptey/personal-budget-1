@@ -1,13 +1,13 @@
 const express = require('express');
-const app = express()
+const bodyParser = require('body-parser');
+const envelopeRouter = require('./envelopeRouter');
 
-app.get('/', (req, res) => {
-    console.log("Hello world")
-    res.status(200).send("Hello world")
-})
+const app = express();
+const PORT = process.env.PORT || 3000
 
-app.post('/envelopes', (req, res) => {
-    res.status(201).send("Active post request");
-})
+app.use(bodyParser.json());
+app.use('/envelopes', envelopeRouter);
 
-app.listen(3000, console.log("Server is listening at port 3000"))
+app.listen(PORT, () => {
+    console.log(`API listening on port ${PORT}`)
+});

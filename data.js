@@ -1,1 +1,3 @@
-const budget = [];
+const budget = {
+   'gas': 0, 
+};
